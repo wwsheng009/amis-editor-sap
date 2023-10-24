@@ -1,16 +1,16 @@
 {
-  "name": "amis-editor-demo",
+  "name": "amis-editor-sap",
   "version": "1.0.0",
   "description": "amis 可视化编辑器",
   "main": "index.js",
   "scripts": {
-    "dev": "amis dev",
+    "dev": "set DEBUG=http-proxy-middleware* && amis dev --debug",
     "build": "amis build",
     "format": "prettier --write \"src/**/**/*.{js,jsx,ts,tsx,vue,scss,json}\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aisuda/amis-editor-demo.git"
+    "url": "git+https://github.com/wwsheng009/amis-editor-sap.git"
   },
   "keywords": [
     "amis",
@@ -26,10 +26,10 @@
     "@fortawesome/fontawesome-free": "^5.15.3",
     "amis": "3.4.3",
     "amis-core": "3.4.3",
-    "amis-formula": "3.4.3",
-    "amis-ui": "3.4.3",
     "amis-editor": "5.6.1",
     "amis-editor-core": "5.6.1",
+    "amis-formula": "3.4.3",
+    "amis-ui": "3.4.3",
     "axios": "0.21.2",
     "copy-to-clipboard": "^3.2.0",
     "mobx": "4.15.7",
@@ -52,6 +52,7 @@
     "@types/react-router-dom": "^5.3.3",
     "acorn": "^8.8.2",
     "amis-widget-cli": "^3.2.0",
+    "dotenv": "^16.3.1",
     "monaco-editor-webpack-plugin": "6.0.0",
     "prettier": "^2.2.1",
     "sass": "^1.63.4",

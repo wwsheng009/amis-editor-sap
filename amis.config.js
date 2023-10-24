@@ -1,6 +1,8 @@
 'use strict';
 const path = require('path');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+require('dotenv').config();
+
 // 统一路径解析
 function resolve(dir) {
   return path.resolve(__dirname, dir);
@@ -11,12 +13,21 @@ module.exports = {
   webpack: {
     resolve: {
       // webpack的resolve配置
-      extensions: ['.js', '.jsx', '.ts', '.tsx','.esm.js', '.umd.js', '.min.js', '.json'], // 用于配置webpack在尝试过程中用到的后缀列表
+      extensions: [
+        '.js',
+        '.jsx',
+        '.ts',
+        '.tsx',
+        '.esm.js',
+        '.umd.js',
+        '.min.js',
+        '.json'
+      ], // 用于配置webpack在尝试过程中用到的后缀列表
       alias: {
-        '@': resolve('src'),
+        '@': resolve('src')
         // $function: resolve('src/function'),
         // $utils: resolve('src/utils'),
-      },
+      }
       // conditionNames: ['require']
     },
     createDeclaration: false, // 打包时是否创建ts声明文件
@@ -28,11 +39,12 @@ module.exports = {
     // cssLoaderUrl: true,
     // cssLoaderUrlDir: 'editor/fontawesome-free',
     moduleRules: [], // 用于配置自定义loaders
-    plugins: [], // 用于配置自定义plugins
+    plugins: [] // 用于配置自定义plugins
   },
   dev: {
-    entry: { // 本地调试模式的入口
-      index: './src/index.tsx',
+    entry: {
+      // 本地调试模式的入口
+      index: './src/index.tsx'
     },
     // 用于开启本地调试模式的相关配置信息
     NODE_ENV: 'development',
@@ -53,24 +65,50 @@ module.exports = {
       '/apiTest': {
         target: 'http://api-test.com.cn', // 不支持跨域的接口根地址
         ws: true,
-        changeOrigin: true,
+        changeOrigin: true
       },
+      '/sap': {
+        target: process.env.SAP_HOST, // 代理地址
+        changeOrigin: true, // 是否允许跨域
+        secure: false,
+        auth: `${process.env.SAP_USER}:${process.env.SAP_PASS}`
+        // headers: {
+        //   Authorization: 'Basic V0FOR1dTOjY1NDMyMQ=='
+        // },
+        // auth: `WANGWS:654321`
+      },
+      '/amis': {
+        // 请求接口中要替换的标识
+        target: process.env.SAP_HOST, // 代理地址
+        changeOrigin: true, // 是否允许跨域
+        secure: false,
+        auth: `${process.env.SAP_USER}:${process.env.SAP_PASS}`
+        // headers: {
+        //   Authorization: 'Basic V0FOR1dTOjY1NDMyMQ=='
+        // },
+        // auth: `WANGWS:654321`
+        // rewrite: (path) => path.replace(/^\/api/, ""), // api标志替换为''
+      }
     }
   },
   build: {
-    entry: { // webpack构建入口
-      index: './src/index.tsx',
+    entry: {
+      // webpack构建入口
+      index: './src/index.tsx'
       // editor:  './src/mobile.tsx'
     },
     // 用于构建生产环境代码的相关配置信息
     NODE_ENV: 'production',
-    assetsRoot: resolve('./demo-5.6.1-v2'), // 打包后的文件绝对路径（物理路径）
-    assetsPublicPath: 'https://aisuda.github.io/amis-editor-demo/demo-5.6.1-v2/', // 设置静态资源的引用路径（根域名+路径）
+    // assetsRoot: resolve('./demo-5.6.1-v2'), // 打包后的文件绝对路径（物理路径）
+    // assetsPublicPath: 'https://aisuda.github.io/amis-editor-demo/demo-5.6.1-v2/', // 设置静态资源的引用路径（根域名+路径）
+    assetsRoot: resolve('./zamis_editor'), // 打包后的文件绝对路径（物理路径）
+    assetsPublicPath: '/sap/bc/ui5_ui5/sap/zamis_editor/', // 设置静态资源的引用路径（根域名+路径）
+
     assetsSubDirectory: '', // 资源引用二级路径
     productionSourceMap: false,
     productionGzip: false,
     productionGzipExtensions: ['js', 'css', 'json'],
     plugins: [new MonacoWebpackPlugin()],
-    bundleAnalyzerReport: false,
+    bundleAnalyzerReport: false
   }
 };
